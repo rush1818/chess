@@ -34,7 +34,7 @@ class Board
 
   def valid_position?(pos)
     valid = pos.all? { |el| el.between?(0,7) }
-    raise ArgumentError.new "Not within board range" unless valid
+    # raise ArgumentError.new "Not within board range" unless valid
     valid
   end
 
