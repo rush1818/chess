@@ -28,21 +28,21 @@ class Board
   #   self[pos].nil?
   # end
 
-  def empty_spot?(pos)
+  def empty?(pos)
     self[pos].empty?
   end
 
-  def valid_position?(pos)
+  def valid_pos?(pos)
     valid = pos.all? { |el| el.between?(0,7) }
     # raise ArgumentError.new "Not within board range" unless valid
     valid
   end
 
   def move_piece(start_pos, end_pos)
-    if empty_spot?(start_pos)
+    if empty?(start_pos)
       raise ArgumentError.new "There is no piece there"
     end
-    if valid_position?(start_pos)
+    if valid_pos?(start_pos)
       piece_to_move = self[start_pos]
       raise "Piece cannot move into that spot" unless piece_to_move.valid_moves.include?(end_pos)
       piece_to_move.move(end_pos)
