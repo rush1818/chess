@@ -12,7 +12,7 @@ class NullPiece
   end
 
   def to_s
-    " ".colorize(:background => :blue)
+    " "
   end
 
   def empty?
