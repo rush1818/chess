@@ -1,10 +1,9 @@
-require_relative "../board"
 require 'byebug'
 
 
 class Piece
 
-  attr_reader  :color, :moves
+  attr_reader  :color, :moves, :board
   attr_accessor :pos
 
   def initialize(color, board, pos)
@@ -19,7 +18,9 @@ class Piece
     false
   end
 
-
+  def to_s
+    self.symbol
+  end
 
 
 end

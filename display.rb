@@ -49,8 +49,14 @@ class Display
 
 end
 #
-display = Display.new
-display.render
+b = Board.new
+q = Queen.new(:black, b, [0,0])
+r = Rook.new(:black, b, [1,1])
+b[[0,0]] = q
+b[[1,1]] = r
+p q.moves
+d = Display.new(b)
+d.render
 # [:black, :light_black, :red, :light_red, :green, :light_green,
 # :yellow, :light_yellow, :blue, :light_blue, :magenta, :light_magenta,
 # :cyan, :light_cyan, :white, :light_white, :default]

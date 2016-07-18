@@ -1,5 +1,6 @@
 #require_relative 'display'
 require_relative 'pieces'
+# require_relative 'display'
 
 class Board
 
@@ -51,3 +52,4 @@ class Board
 
   end
 end
+# Piece requires (color, board, pos)
