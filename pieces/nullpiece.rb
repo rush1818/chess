@@ -8,11 +8,11 @@ class NullPiece
   end
 
   def color
-
+    { :background => :blue }
   end
 
   def to_s
-    " "
+    " ".colorize(:background => :blue)
   end
 
   def empty?

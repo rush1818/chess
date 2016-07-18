@@ -1,7 +1,9 @@
-require_relative 'display'
+#require_relative 'display'
 require_relative 'pieces'
 
 class Board
+
+  attr_reader :grid
 
   def initialize
     @null_piece = NullPiece.instance
