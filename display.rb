@@ -31,12 +31,12 @@ class Display
         row.map.with_index do |piece, id2|
           if [id1, id2] != @cursor_pos
             if (id1 % 2 == 0 && id2 % 2 == 0) || (id1 % 2 != 0 && id2 % 2 != 0)
-              print (piece.to_s  + "  ").colorize(:background => :white)
+              print (" " + piece.to_s  + " ").colorize(:background => :light_white)
             else
-              print (piece.to_s + "  ").colorize(:background => :light_black)
+              print (" " + piece.to_s + " ").colorize(:background => :light_black)
             end
           else
-            print (piece.to_s + "  ").colorize(:background => :light_red)
+            print (" " +piece.to_s + " ").colorize(:background => :light_red)
           end
         end
       end
@@ -50,11 +50,11 @@ class Display
 end
 #
 b = Board.new
-q = Queen.new(:black, b, [0,0])
-r = Rook.new(:black, b, [1,1])
-b[[0,0]] = q
-b[[1,1]] = r
-p q.moves
+# q = Queen.new(:black, b, [0,0])
+# r = Rook.new(:black, b, [1,1])
+# b[[0,0]] = q
+# b[[1,1]] = r
+# p q.moves
 d = Display.new(b)
 d.render
 # [:black, :light_black, :red, :light_red, :green, :light_green,

@@ -1,3 +1,4 @@
+require_relative 'piece'
 module Stepable
   def moves
     move_diffs.each_with_object([]) do |(dx, dy), moves|

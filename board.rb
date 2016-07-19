@@ -8,11 +8,53 @@ class Board
 
   def initialize
     @null_piece = NullPiece.instance
+    make_empty_grid
+  end
+
+  def make_empty_grid
+    @grid = Array.new(8) { Array.new(8, @null_piece) }
     make_starting_grid
   end
 
   def make_starting_grid
-    @grid = Array.new(8) { Array.new(8, @null_piece) }
+    # Piece requires (color, board, pos)
+    color = [:black, :white,:black, :white]
+    [0,7,1,6].each do |r|
+      c = color.shift
+      @grid[r].each_with_index do |el, id|
+
+        pos = [r,id]
+        if r == 0 || r == 7
+          if id == 0 || id == 7
+            self[pos] = Rook.new(c, self, [r,id])
+          end
+
+          if id == 1 || id == 6
+            self[pos] = Bishop.new(c, self, [r,id])
+          end
+
+          if id == 2 || id == 5
+            self[pos] = Knight.new(c, self, [r,id])
+          end
+
+          if id == 3
+            self[pos] = Queen.new(c, self, [r,id])
+          end
+
+          if id == 4
+            self[pos] = King.new(c, self, [r,id])
+          end
+
+        elsif r == 1 || r == 6
+          self[pos] = Pawn.new(c, self, [r,id])
+        end
+
+      end
+
+
+    end
+
+
   end
 
   def [](pos)
