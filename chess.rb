@@ -27,6 +27,8 @@ class Game
       # @current_player.play_turn
       switch_players
     end
+    switch_players
+    puts "Checkmate! #{@current_player.color.to_s.capitalize} won."
   end
 
   def game_over?

@@ -9,11 +9,16 @@ class Pawn < Piece
   def initialize(color, board, pos)
     super
     @moved = false
+    @positions_it_can_attack = []
     top?
   end
 
   def symbol
      '♟'.colorize(color)
+  end
+
+  def valid_moves?
+    self.attack_positions.reject{|new_pos| move_into_check?(new_pos)}
   end
 
   def moves
@@ -25,9 +30,14 @@ class Pawn < Piece
         possible_moves << new_pos
       elsif !@board[new_pos].empty? && ALL_ATTACK_MOVES.include?(div) && @board[new_pos].color != color
         possible_moves << new_pos
+        @positions_it_can_attack << new_pos
       end
     end
     possible_moves
+  end
+
+  def attack_positions
+    @positions_it_can_attack
   end
 
   def attack_moves

@@ -28,8 +28,8 @@ class Piece
   end
 
   def move_to(end_pos)
-  @pos = end_pos
-  @board[@pos] = self
+    @pos = end_pos
+    @board[@pos] = self
   end
 
   def move_into_check?(new_pos)

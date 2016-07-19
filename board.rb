@@ -60,7 +60,7 @@ class Board
     opposite_moves = []
     @grid.flatten.each do |piece|
       next if piece.color == color
-      moves = (piece.is_a?(Pawn) ? piece.attack_moves : piece.moves)
+      moves = (piece.is_a?(Pawn) ? piece.attack_positions : piece.moves)
       opposite_moves.concat(moves)
     end
     opposite_moves.include?(position_king)
