@@ -1,6 +1,6 @@
 #require_relative 'display'
 require_relative 'pieces'
-# require_relative 'display'
+require_relative 'display'
 
 class Board
 
@@ -24,13 +24,13 @@ class Board
       @grid[r].each_with_index do |el, id|
         pos = [r,id]
         if r == 0 || r == 7
-          self[pos] = Rook.new(c, self, [r,id]) if [0,7].include?(id)
-          self[pos] = Bishop.new(c, self, [r,id]) if [1,6].include?(id)
-          self[pos] = Knight.new(c, self, [r,id]) if [1,6].include?(id)
-          self[pos] = Queen.new(c, self, [r,id]) if id == 3
-          self[pos] = King.new(c, self, [r,id])  if id == 4
+          Rook.new(c, self, [r,id]) if [0,7].include?(id)
+          Bishop.new(c, self, [r,id]) if [2,5].include?(id)
+          Knight.new(c, self, [r,id]) if [1,6].include?(id)
+          Queen.new(c, self, [r,id]) if id == 3
+          King.new(c, self, [r,id])  if id == 4
         elsif r == 1 || r == 6
-          self[pos] = Pawn.new(c, self, [r,id])
+          Pawn.new(c, self, [r,id])
         end
       end
     end
@@ -78,3 +78,6 @@ class Board
   end
 end
 # Piece requires (color, board, pos)
+b = Board.new
+d = Display.new(b)
+d.render

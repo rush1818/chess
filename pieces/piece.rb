@@ -12,6 +12,7 @@ class Piece
     @color = color
     @board = board
     @pos = pos
+    @board[pos] = self
   end
 
   def empty?
