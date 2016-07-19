@@ -43,7 +43,7 @@ class Display
 
       puts
       cursor
-      move(@cursor) if @selected
+      return (@cursor) if @selected
     end
   end
 

@@ -75,7 +75,6 @@ class Board
     true
   end
 
-
   def empty?(pos)
     self[pos].empty?
   end
@@ -107,6 +106,13 @@ class Board
       piece.class.new(piece.color, dupped_board, piece.pos)
     end
     dupped_board
+  end
+
+  def get_move
+    display = Display.new(self)
+    start_pos = display.render
+    end_pos = display.render
+    move_piece(start_pos, end_pos)
   end
 
 end
