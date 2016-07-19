@@ -43,6 +43,10 @@ class Pawn < Piece
     end
   end
 
+  def attack_moves
+    @top ? [[-1,-1],[-1,1] ] : [[-1,-1],[-1,1] ]
+  end
+
   protected
   attr_accessor :top
 end

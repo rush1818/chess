@@ -8,7 +8,7 @@ class NullPiece
   end
 
   def color
-    { :background => :blue }
+    :green
   end
 
   def to_s
