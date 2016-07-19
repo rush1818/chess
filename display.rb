@@ -1,13 +1,13 @@
 require 'colorize'
 require_relative 'cursorable'
-# require_relative 'board'
 
 class Display
   include Cursorable
+  attr_accessor :show_alert
   def initialize(board = Board.new)
     @board = board
     @cursor_pos = [0,0]
-    # @game = game
+    @show_alert = false
   end
 
   def cursor
@@ -19,8 +19,11 @@ class Display
     end
   end
 
-  def move(new_pos)
-
+  def alert_player(color)
+    @show_alert = true
+    @color = color
+    puts "#{color.to_s.upcase} is in check"
+    sleep (2)
   end
 
   def render
@@ -40,7 +43,7 @@ class Display
           end
         end
       end
-
+      alert_player(@color) if @show_alert == true
       puts
       cursor
       return (@cursor) if @selected
@@ -48,15 +51,3 @@ class Display
   end
 
 end
-#
-# b = Board.new
-# # q = Queen.new(:black, b, [0,0])
-# # r = Rook.new(:black, b, [1,1])
-# # b[[0,0]] = q
-# # b[[1,1]] = r
-# # p q.moves
-# d = Display.new(b)
-# d.render
-# [:black, :light_black, :red, :light_red, :green, :light_green,
-# :yellow, :light_yellow, :blue, :light_blue, :magenta, :light_magenta,
-# :cyan, :light_cyan, :white, :light_white, :default]

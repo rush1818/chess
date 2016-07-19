@@ -22,3 +22,12 @@ class EmptySquareError < StandardError
     @msg = "There's no piece there!"
   end
 end
+
+
+class GameCheckError < StandardError
+  attr_reader :msg
+  def initialize
+    super
+    @msg = "Invalid move, your King will be in check!"
+  end
+end

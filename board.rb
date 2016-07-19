@@ -109,7 +109,12 @@ class Board
     raise EmptySquareError if start_piece == @null_piece
     raise IncorrectPieceError if start_piece.color != current_player.color
     end_pos = display.render
+    dupped_board = self.dup
+    dupped_board.move_piece(start_pos, end_pos)
+    raise GameCheckError if dupped_board.in_check?(current_player.color)
+    other_player_color = current_player.color == :black ? :white : :black
     move_piece(start_pos, end_pos)
+    display.alert_player(other_player_color) if dupped_board.in_check?(other_player_color)
   end
 
 end

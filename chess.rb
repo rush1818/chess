@@ -24,7 +24,6 @@ class Game
         sleep (1)
         retry
       end
-      # @current_player.play_turn
       switch_players
     end
     switch_players
@@ -37,5 +36,7 @@ class Game
 
 end
 
-game = Game.new
-game.play_game
+if __FILE__ == $PROGRAM_NAME
+  game = Game.new
+  game.play_game
+end
