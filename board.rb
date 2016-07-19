@@ -22,38 +22,18 @@ class Board
     [0,7,1,6].each do |r|
       c = color.shift
       @grid[r].each_with_index do |el, id|
-
         pos = [r,id]
         if r == 0 || r == 7
-          if id == 0 || id == 7
-            self[pos] = Rook.new(c, self, [r,id])
-          end
-
-          if id == 1 || id == 6
-            self[pos] = Bishop.new(c, self, [r,id])
-          end
-
-          if id == 2 || id == 5
-            self[pos] = Knight.new(c, self, [r,id])
-          end
-
-          if id == 3
-            self[pos] = Queen.new(c, self, [r,id])
-          end
-
-          if id == 4
-            self[pos] = King.new(c, self, [r,id])
-          end
-
+          self[pos] = Rook.new(c, self, [r,id]) if [0,7].include?(id)
+          self[pos] = Bishop.new(c, self, [r,id]) if [1,6].include?(id)
+          self[pos] = Knight.new(c, self, [r,id]) if [1,6].include?(id)
+          self[pos] = Queen.new(c, self, [r,id]) if id == 3
+          self[pos] = King.new(c, self, [r,id])  if id == 4
         elsif r == 1 || r == 6
           self[pos] = Pawn.new(c, self, [r,id])
         end
-
       end
-
-
     end
-
 
   end
 
