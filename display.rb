@@ -30,16 +30,16 @@ class Display
     until false
       system 'clear'
       @board.grid.each_with_index do |row, id1|
-        1.times { puts }
-        row.map.with_index do |piece, id2|
-          if [id1, id2] != @cursor_pos
+        puts
+        row.each.with_index do |piece, id2|
+          if [id1, id2] == @cursor_pos
+            print (" " + piece.to_s + " ").colorize(:background => :light_red)
+          else
             if (id1 % 2 == 0 && id2 % 2 == 0) || (id1 % 2 != 0 && id2 % 2 != 0)
               print (" " + piece.to_s  + " ").colorize(:background => :light_white)
             else
               print (" " + piece.to_s + " ").colorize(:background => :light_black)
             end
-          else
-            print (" " +piece.to_s + " ").colorize(:background => :light_red)
           end
         end
       end

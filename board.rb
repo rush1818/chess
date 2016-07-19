@@ -85,6 +85,9 @@ class Board
     display.alert_player(other_player_color) if dupped_board.in_check?(other_player_color)
   end
 
+  def find_pieces(color)
+    @grid.flatten.select { |piece| !piece.is_a?(NullPiece) && piece.color == color }
+  end
 
   private
   def make_empty_grid(fill_board)
@@ -117,8 +120,6 @@ class Board
     @grid.flatten.each { |piece| return piece.pos if piece.is_a?(King) && piece.color == color }
   end
 
-  def find_pieces(color)
-    @grid.flatten.select { |piece| !piece.is_a?(NullPiece) && piece.color == color }
-  end
+
 
 end

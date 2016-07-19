@@ -11,7 +11,7 @@ class IncorrectPieceError < StandardError
   attr_reader :msg
   def initialize
     super
-    @msg = "That's not your piece! Try again."
+    @msg = "That's not your piece!"
   end
 end
 
