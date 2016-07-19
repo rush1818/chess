@@ -80,16 +80,10 @@ class Board
   end
 
   def valid_pos?(pos)
-    valid = pos.all? { |el| el.between?(0,7) }
-    # raise ArgumentError.new "Not within board range" unless valid
-    valid
+    pos.all? { |el| el.between?(0,7) }
   end
 
   def move_piece(start_pos, end_pos)
-    # if empty?(start_pos)
-    #   raise ArgumentError.new "There is no piece there"
-    # end
-
     if valid_pos?(start_pos)
       piece_to_move = self[start_pos]
       raise InvalidMoveError.new unless piece_to_move.moves.include?(end_pos)

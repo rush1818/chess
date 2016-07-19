@@ -1,7 +1,10 @@
-require_relative 'stepable'
+require_relative 'piece'
 
 class Pawn < Piece
-  include Stepable
+
+  ALL_ATTACK_MOVES = [[-1,-1],[-1,1] ,[1,-1],[1,1]]
+
+  attr_reader :top
 
   def initialize(color, board, pos)
     super
@@ -13,38 +16,36 @@ class Pawn < Piece
      '♟'.colorize(color)
   end
 
-  def move_diffs
-    #if it is at bottom
-    attack_moves = [[-1,-1],[-1,1] ]
-    normal_moves = [[-1,0]]
-    first_move = [[-2,0]]
-
-    if @top
-      attack_moves = [[1,-1],[1,1]]
-      normal_moves = [[1,0]]
-      first_move = [[2,0]]
+  def moves
+    possible_moves = []
+    move_diffs.each do |div|
+      drow, dcol = div
+      new_pos = [@pos[0] + drow, @pos[1] + dcol]
+      if @board[new_pos].empty? && !ALL_ATTACK_MOVES.include?(div)
+        possible_moves << new_pos
+      elsif !@board[new_pos].empty? && ALL_ATTACK_MOVES.include?(div) && @board[new_pos].color != color
+        possible_moves << new_pos
+      end
     end
-
-    if @moved == false
-      moves = normal_moves + attack_moves + first_move
-    else
-      moves = normal_moves + attack_moves
-    end
-    @moved = true
-    moves
-  end
-
-  def top?
-    rows = @board.grid.length
-    if @pos[0] < rows/2
-      @top = true
-    else
-      @top = false
-    end
+    possible_moves
   end
 
   def attack_moves
-    @top ? [[-1,-1],[-1,1] ] : [[-1,-1],[-1,1] ]
+    @top ? [[1,-1],[1,1] ] : [[-1,-1],[-1,1]]
+  end
+
+  def move_diffs
+    piece_moves = (@top ?  [[1,0]] : [[-1,0]] )
+    first_move = (@top ?  [[2,0]] : [[-2,0]] )
+
+    piece_moves.concat(first_move) unless @moved
+    piece_moves.concat(attack_moves)
+    @moved = true
+    piece_moves
+  end
+
+  def top?
+    @top = (self.color == :black ? true : false)
   end
 
   protected
