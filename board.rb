@@ -47,9 +47,12 @@ class Board
     @grid[x][y] = value
   end
 
-  # def is_nil?(pos)
-  #   self[pos].nil?
-  # end
+  #phase4
+  def in_check?(color)
+  end
+
+  def checkmate?(color)
+  end
 
   def empty?(pos)
     self[pos].empty?
