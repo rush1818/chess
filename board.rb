@@ -1,6 +1,6 @@
-#require_relative 'display'
 require_relative 'pieces'
 require_relative 'display'
+require_relative 'errors'
 
 class Board
 
@@ -86,13 +86,13 @@ class Board
   end
 
   def move_piece(start_pos, end_pos)
-    if empty?(start_pos)
-      raise ArgumentError.new "There is no piece there"
-    end
+    # if empty?(start_pos)
+    #   raise ArgumentError.new "There is no piece there"
+    # end
 
     if valid_pos?(start_pos)
       piece_to_move = self[start_pos]
-      raise "Piece cannot move into that spot" unless piece_to_move.moves.include?(end_pos)
+      raise InvalidMoveError.new unless piece_to_move.moves.include?(end_pos)
       piece_to_move.move_to(end_pos)
       self[start_pos] = @null_piece
     end
@@ -108,28 +108,14 @@ class Board
     dupped_board
   end
 
-  def get_move
+  def get_move(current_player)
     display = Display.new(self)
     start_pos = display.render
+    start_piece = self[start_pos]
+    raise EmptySquareError if start_piece == @null_piece
+    raise IncorrectPieceError if start_piece.color != current_player.color
     end_pos = display.render
     move_piece(start_pos, end_pos)
   end
 
 end
-# Piece requires (color, board, pos)
-b = Board.new(false)
-white_king = King.new(:white, b, [0,0])
-black_rook = Rook.new(:black, b, [1, 0])
-black_rook2 = Rook.new(:black, b, [1,1])
-# black_rook3 = Rook.new(:black, b, [1, 3])
-# d = Display.new(b)
-# # d.render
-p white_king.moves
-p white_king.valid_moves?
-p b.in_check?(:white)
-p b.checkmate?(:white)
-# d.render
-b_dup = b.dup
-# d = Display.new(b_dup)
-# d.render
-# p b[[0,0]] == b_dup[[0,0]]

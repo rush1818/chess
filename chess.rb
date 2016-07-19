@@ -17,7 +17,13 @@ class Game
 
   def play_game
     until game_over?
-      @board.get_move
+      begin
+        @board.get_move(@current_player)
+      rescue StandardError => e
+        puts e.msg
+        sleep (1)
+        retry
+      end
       # @current_player.play_turn
       switch_players
     end
@@ -26,7 +32,6 @@ class Game
   def game_over?
     @board.checkmate?(:white) || @board.checkmate?(:black)
   end
-
 
 end
 
