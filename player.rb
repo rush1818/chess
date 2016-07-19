@@ -7,9 +7,4 @@ class HumanPlayer
     @color = color
   end
 
-  def play_turn
-
-  end
-
-
 end

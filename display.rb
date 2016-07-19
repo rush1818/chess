@@ -4,9 +4,9 @@ require_relative 'cursorable'
 class Display
   include Cursorable
   attr_accessor :show_alert
-  def initialize(board = Board.new)
+  def initialize(board = Board.new, cursor_pos)
     @board = board
-    @cursor_pos = [0,0]
+    @cursor_pos = cursor_pos
     @show_alert = false
   end
 

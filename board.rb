@@ -9,32 +9,7 @@ class Board
   def initialize(fill_board = true)
     @null_piece = NullPiece.instance
     make_empty_grid(fill_board)
-  end
-
-  def make_empty_grid(fill_board)
-    @grid = Array.new(8) { Array.new(8, @null_piece) }
-    make_starting_grid if fill_board
-  end
-
-  def make_starting_grid
-    # Piece requires (color, board, pos)
-    color = [:black, :white,:black, :white]
-    [0,7,1,6].each do |r|
-      c = color.shift
-      @grid[r].each_with_index do |el, id|
-        pos = [r,id]
-        if r == 0 || r == 7
-          Rook.new(c, self, [r,id]) if [0,7].include?(id)
-          Bishop.new(c, self, [r,id]) if [2,5].include?(id)
-          Knight.new(c, self, [r,id]) if [1,6].include?(id)
-          Queen.new(c, self, [r,id]) if id == 3
-          King.new(c, self, [r,id])  if id == 4
-        elsif r == 1 || r == 6
-          Pawn.new(c, self, [r,id])
-        end
-      end
-    end
-
+    @last_cursor =[0,0]
   end
 
   def [](pos)
@@ -45,14 +20,6 @@ class Board
   def []=(pos, value)
     x, y = pos
     @grid[x][y] = value
-  end
-
-  def find_king_pos(color)
-    @grid.flatten.each { |piece| return piece.pos if piece.is_a?(King) && piece.color == color }
-  end
-
-  def find_pieces(color)
-    @grid.flatten.select { |piece| !piece.is_a?(NullPiece) && piece.color == color }
   end
 
   def in_check?(color)
@@ -103,18 +70,55 @@ class Board
   end
 
   def get_move(current_player)
-    display = Display.new(self)
+    display = Display.new(self, @last_cursor)
     start_pos = display.render
     start_piece = self[start_pos]
     raise EmptySquareError if start_piece == @null_piece
     raise IncorrectPieceError if start_piece.color != current_player.color
     end_pos = display.render
+    @last_cursor = end_pos
     dupped_board = self.dup
     dupped_board.move_piece(start_pos, end_pos)
     raise GameCheckError if dupped_board.in_check?(current_player.color)
     other_player_color = current_player.color == :black ? :white : :black
     move_piece(start_pos, end_pos)
     display.alert_player(other_player_color) if dupped_board.in_check?(other_player_color)
+  end
+
+
+  private
+  def make_empty_grid(fill_board)
+    @grid = Array.new(8) { Array.new(8, @null_piece) }
+    make_starting_grid if fill_board
+  end
+
+  def make_starting_grid
+    # Piece requires (color, board, pos)
+    color = [:black, :white,:black, :white]
+    [0,7,1,6].each do |r|
+      c = color.shift
+      @grid[r].each_with_index do |el, id|
+        pos = [r,id]
+        if r == 0 || r == 7
+          Rook.new(c, self, [r,id]) if [0,7].include?(id)
+          Bishop.new(c, self, [r,id]) if [2,5].include?(id)
+          Knight.new(c, self, [r,id]) if [1,6].include?(id)
+          Queen.new(c, self, [r,id]) if id == 3
+          King.new(c, self, [r,id])  if id == 4
+        elsif r == 1 || r == 6
+          Pawn.new(c, self, [r,id])
+        end
+      end
+    end
+
+  end
+
+  def find_king_pos(color)
+    @grid.flatten.each { |piece| return piece.pos if piece.is_a?(King) && piece.color == color }
+  end
+
+  def find_pieces(color)
+    @grid.flatten.select { |piece| !piece.is_a?(NullPiece) && piece.color == color }
   end
 
 end
