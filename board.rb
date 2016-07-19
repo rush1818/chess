@@ -47,58 +47,28 @@ class Board
     @grid[x][y] = value
   end
 
-  #phase4
-
   def find_king_pos(color)
-    king = @grid.flatten.select { |piece| piece.is_a?(King) && piece.color == color }
-    king.first.pos
+    @grid.flatten.each { |piece| return piece.pos if piece.is_a?(King) && piece.color == color }
   end
 
   def find_pieces(color)
-    # @grid.flatten.select { |piece| !piece.is_a?(NullPiece) && piece.color == color }
-    pieces = []
-    @grid.each_with_index do |row, row_id|
-      row.each_with_index do |piece, col_id|
-        pieces << piece if piece.is_a?(Piece) && piece.color == color
-      end
-    end
-    pieces
+    @grid.flatten.select { |piece| !piece.is_a?(NullPiece) && piece.color == color }
   end
 
   def in_check?(color)
     position_king = find_king_pos(color)
     opposite_moves = []
-    @grid.each_with_index do |row, row_id|
-      row.each_with_index do |piece, col_id|
-        next if piece.color == color
-          if piece.is_a?(Pawn)
-            opposite_moves.concat(piece.attack_moves)
-          else
-            opposite_moves.concat(piece.moves)
-          end
-      end
+    @grid.flatten.each do |piece|
+      next if piece.color == color
+      moves = (piece.is_a?(Pawn) ? piece.attack_moves : piece.moves)
+      opposite_moves.concat(moves)
     end
     opposite_moves.include?(position_king)
   end
 
   def checkmate?(color)
     return false unless in_check?(color)
-    # valid_moves = []
-    # position_king = find_king_pos(color)
-    # valid_pos = []
-    # p all_king_moves = self[position_king].moves
-    # # all_king_moves.each do |new_pos|
-    # #   # piece_at_new_pos = self[new_pos]
-    # #   # self[new_pos] = King.new(color, self, new_pos)
-    # #   # self[position_king] = @null_piece
-    # #   # valid_pos << new_pos unless in_check?(color)
-    # #   # self[position_king] = King.new(color, self, position_king)
-    # #   # self[new_pos] = piece_at_new_pos
-    # #   move_into_check?(new_pos)
-    # # end
-    # valid_pos == [] ? true : false
     all_pieces = find_pieces(color)
-    # p all_pieces
     all_pieces.each do |piece|
       return false if piece.valid_moves? != []
     end
@@ -124,9 +94,6 @@ class Board
     if valid_pos?(start_pos)
       piece_to_move = self[start_pos]
       raise "Piece cannot move into that spot" unless piece_to_move.moves.include?(end_pos)
-      # piece_to_move.move_to(end_pos)
-      # self[end_pos] = piece_to_move
-      # self[start_pos] = @null_piece
       piece_to_move.move_to(end_pos)
       self[start_pos] = @null_piece
     end
