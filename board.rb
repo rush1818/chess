@@ -1,6 +1,8 @@
 require_relative 'pieces'
 require_relative 'display'
 require_relative 'errors'
+require 'byebug'
+
 
 class Board
 
@@ -9,7 +11,7 @@ class Board
   def initialize(fill_board = true)
     @null_piece = NullPiece.instance
     make_empty_grid(fill_board)
-    @last_cursor =[0,0]
+    @last_cursor =[4,4]
   end
 
   def [](pos)

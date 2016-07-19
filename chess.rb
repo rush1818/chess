@@ -21,14 +21,16 @@ class Game
 
   def play_game
     until game_over?
-      @current_player.play_turn
-      # begin
-      #   @board.get_move(@current_player)
-      # rescue StandardError => e
-      #   puts e.msg
-      #   sleep (1)
-      #   retry
-      # end
+
+      # sleep (2)
+      begin
+        @current_player.play_turn
+        # @board.get_move(@current_player)
+      rescue StandardError => e
+        puts e.msg
+        sleep (1)
+        retry
+      end
       switch_players
     end
     switch_players
@@ -49,6 +51,8 @@ class Game
 end
 
 if __FILE__ == $PROGRAM_NAME
-  game = Game.new(HumanPlayer.new("P1",:white), HumanPlayer.new("AI", :black) )
+  # game = Game.new(HumanPlayer.new("P1",:white), HumanPlayer.new("AI", :black) )
+  game = Game.new(HumanPlayer.new("P1",:white), ComputerPlayer.new("AI", :black) )
+
   game.play_game
 end

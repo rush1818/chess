@@ -23,14 +23,18 @@ class Pawn < Piece
 
   def moves
     possible_moves = []
-    move_diffs.each do |div|
+    move_types = move_diffs
+    move_types.each do |div|
       drow, dcol = div
       new_pos = [@pos[0] + drow, @pos[1] + dcol]
-      if @board[new_pos].empty? && !ALL_ATTACK_MOVES.include?(div)
-        possible_moves << new_pos
-      elsif !@board[new_pos].empty? && ALL_ATTACK_MOVES.include?(div) && @board[new_pos].color != color
-        possible_moves << new_pos
-        @positions_it_can_attack << new_pos
+      if @board.valid_pos?(new_pos)
+        byebug if @board[new_pos].nil?
+        if @board[new_pos].empty? && !ALL_ATTACK_MOVES.include?(div)
+          possible_moves << new_pos
+        elsif !@board[new_pos].empty? && ALL_ATTACK_MOVES.include?(div) && @board[new_pos].color != color
+          possible_moves << new_pos
+          @positions_it_can_attack << new_pos
+        end
       end
     end
     possible_moves
