@@ -5,7 +5,7 @@ class Bishop < Piece
   include Sliding
 
   def symbol
-    '♝'.colorize(color)
+    "\u265D".encode('utf-8').colorize(color)
   end
 
   def move_dirs

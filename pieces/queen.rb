@@ -5,7 +5,7 @@ class Queen < Piece
   include Sliding
 
   def symbol
-    '♛'.colorize(color)
+    "\u265B".encode('utf-8').colorize(color)
   end
 
   def move_dirs

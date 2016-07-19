@@ -5,7 +5,7 @@ class Rook < Piece
   include Sliding
 
   def symbol
-    '♜'.colorize(color)
+    "\u265C".encode('utf-8').colorize(color)
   end
 
   def move_dirs

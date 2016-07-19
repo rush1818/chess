@@ -14,7 +14,7 @@ class Pawn < Piece
   end
 
   def symbol
-     '♟'.colorize(color)
+    "\u265F".encode('utf-8').colorize(color)
   end
 
   def valid_moves?

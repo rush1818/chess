@@ -5,7 +5,8 @@ class King < Piece
   include Stepable
 
   def symbol
-    '♚'.colorize(color)
+    "\u265A".encode('utf-8').colorize(color)
+    # '♚'.colorize(color)
   end
 
   def move_diffs

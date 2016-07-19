@@ -5,7 +5,7 @@ class Knight < Piece
   include Stepable
 
   def symbol
-    '♞'.colorize(color)
+    "\u265E".encode('utf-8').colorize(color)
   end
 
   def move_diffs
