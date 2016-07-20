@@ -26,13 +26,14 @@ class Display
     sleep (2)
   end
 
-  def render
+  def render(computer = true)
+    @computer = computer
     until false
       system 'clear'
       @board.grid.each_with_index do |row, id1|
         puts
         row.each.with_index do |piece, id2|
-          if [id1, id2] == @cursor_pos
+          if [id1, id2] == @cursor_pos && !@computer
             print (" " + piece.to_s + " ").colorize(:background => :light_red)
           else
             if (id1 % 2 == 0 && id2 % 2 == 0) || (id1 % 2 != 0 && id2 % 2 != 0)
@@ -45,8 +46,9 @@ class Display
       end
       alert_player(@color) if @show_alert == true
       puts
-      cursor
-      return (@cursor) if @selected
+      cursor unless @computer
+      sleep(0.5) if @computer
+      return (@cursor) if @selected || @computer
     end
   end
 

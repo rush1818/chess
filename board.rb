@@ -12,6 +12,7 @@ class Board
     @null_piece = NullPiece.instance
     make_empty_grid(fill_board)
     @last_cursor =[4,4]
+    @display = Display.new(self, @last_cursor)
   end
 
   def [](pos)
@@ -72,12 +73,13 @@ class Board
   end
 
   def get_move(current_player)
-    display = Display.new(self, @last_cursor)
-    start_pos = display.render
+    @display = Display.new(self, @last_cursor)
+    # start_pos = display.render
+    start_pos = render_board
     start_piece = self[start_pos]
     raise EmptySquareError if start_piece == @null_piece
     raise IncorrectPieceError if start_piece.color != current_player.color
-    end_pos = display.render
+    end_pos = render_board
     @last_cursor = end_pos
     dupped_board = self.dup
     dupped_board.move_piece(start_pos, end_pos)
@@ -85,6 +87,14 @@ class Board
     other_player_color = current_player.color == :black ? :white : :black
     move_piece(start_pos, end_pos)
     display.alert_player(other_player_color) if dupped_board.in_check?(other_player_color)
+  end
+
+  def render_board(type = "computer")
+    if type == "computer"
+      @display.render(true)
+    else
+      @display.render(false)
+    end
   end
 
   def find_pieces(color)
