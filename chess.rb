@@ -21,8 +21,6 @@ class Game
 
   def play_game
     until game_over?
-
-      # sleep (2)
       begin
         @current_player.play_turn
         # @board.get_move(@current_player)
@@ -38,6 +36,8 @@ class Game
   end
 
   private
+  attr_reader :player1, :player2
+
   def game_over?
     @board.checkmate?(:white) || @board.checkmate?(:black)
   end
@@ -46,13 +46,10 @@ class Game
     @current_player = (@current_player == @player1 ? @player2 : @player1)
   end
 
-  attr_reader :player1, :player2
-
 end
 
 if __FILE__ == $PROGRAM_NAME
   # game = Game.new(HumanPlayer.new("P1",:white), HumanPlayer.new("AI", :black) )
   game = Game.new(HumanPlayer.new("P1",:white), ComputerPlayer.new("AI", :black) )
-
   game.play_game
 end

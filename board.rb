@@ -81,13 +81,25 @@ class Board
     raise IncorrectPieceError if start_piece.color != current_player.color
     end_pos = render_board
     @last_cursor = end_pos
+    # dupped_board = self.dup
+    # dupped_board.move_piece(start_pos, end_pos)
+    # raise GameCheckError if dupped_board.in_check?(current_player.color)
+    other_player_color = current_player.color == :black ? :white : :black
+    move_creates_checked?(current_player, start_pos, end_pos)
+    move_piece(start_pos, end_pos)
+    @display.alert_player(other_player_color) if in_check?(other_player_color)
+    # display.alert_player(other_player_color) if @other_player_in_check #dupped_board.in_check?(other_player_color)
+  end
+
+  def move_creates_checked?(current_player, start_pos, end_pos)
     dupped_board = self.dup
     dupped_board.move_piece(start_pos, end_pos)
-    raise GameCheckError if dupped_board.in_check?(current_player.color)
-    other_player_color = current_player.color == :black ? :white : :black
-    move_piece(start_pos, end_pos)
-    display.alert_player(other_player_color) if dupped_board.in_check?(other_player_color)
+    positions_creates_check = dupped_board.in_check?(current_player.color)
+    raise GameCheckError if positions_creates_check
+    # other_player_color = current_player.color == :black ? :white : :black
+    # @other_player_in_check = dupped_board.in_check?(other_player_color)
   end
+
 
   def render_board(type = "human")
     @display.render( type == "computer" ? true : false)

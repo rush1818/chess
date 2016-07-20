@@ -22,8 +22,9 @@ class Display
   def alert_player(color)
     @show_alert = true
     @color = color
+    puts
     puts "#{color.to_s.upcase} is in check"
-    sleep (2)
+    sleep (1)
   end
 
   def render(computer = true)

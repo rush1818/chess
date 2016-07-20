@@ -23,12 +23,13 @@ class ComputerPlayer
       end
       start_pos = random_piece.pos
       end_pos = condition_to_check.shuffle.sample
-      @board.move_piece(start_pos, end_pos)
+      @board.move_creates_checked?(self, start_pos, end_pos)
     rescue StandardError => e
       puts e.msg
       sleep (1)
       retry
     end
+      @board.move_piece(start_pos, end_pos)
   end
 
 end
