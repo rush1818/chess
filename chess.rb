@@ -52,7 +52,7 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   # game = Game.new(HumanPlayer.new("P1",:white), HumanPlayer.new("AI", :black) )
-  game = Game.new(ComputerPlayer.new("P1",:white), ComputerPlayer.new("AI", :black) )
+  game = Game.new(HumanPlayer.new("P1",:white), ComputerPlayer.new("AI", :black) )
 
   game.play_game
 end

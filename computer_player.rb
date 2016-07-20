@@ -13,18 +13,6 @@ class ComputerPlayer
   end
 
   def play_turn
-    # begin
-    #   @board.get_move(self)
-    # rescue StandardError => e
-    #   puts e.msg
-    #   sleep (1)
-    #   retry
-    # end
-    #move_piece(start_pos, end_pos)
-    #all pieces board.find_pieces(color)
-    #iterate and find all valid_moves each
-    #choose at random
-    # d = Display.new(@board).cursor
     begin
       @board.render_board("computer")
       random_piece = @board.find_pieces(color).shuffle.sample
@@ -42,7 +30,5 @@ class ComputerPlayer
       retry
     end
   end
-
-
 
 end

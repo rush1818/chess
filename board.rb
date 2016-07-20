@@ -89,12 +89,8 @@ class Board
     display.alert_player(other_player_color) if dupped_board.in_check?(other_player_color)
   end
 
-  def render_board(type = "computer")
-    if type == "computer"
-      @display.render(true)
-    else
-      @display.render(false)
-    end
+  def render_board(type = "human")
+    @display.render( type == "computer" ? true : false)
   end
 
   def find_pieces(color)
@@ -131,7 +127,5 @@ class Board
   def find_king_pos(color)
     @grid.flatten.each { |piece| return piece.pos if piece.is_a?(King) && piece.color == color }
   end
-
-
 
 end
