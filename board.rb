@@ -74,21 +74,16 @@ class Board
 
   def get_move(current_player)
     @display = Display.new(self, @last_cursor)
-    # start_pos = display.render
     start_pos = render_board
     start_piece = self[start_pos]
     raise EmptySquareError if start_piece == @null_piece
     raise IncorrectPieceError if start_piece.color != current_player.color
     end_pos = render_board
     @last_cursor = end_pos
-    # dupped_board = self.dup
-    # dupped_board.move_piece(start_pos, end_pos)
-    # raise GameCheckError if dupped_board.in_check?(current_player.color)
     other_player_color = current_player.color == :black ? :white : :black
     move_creates_checked?(current_player, start_pos, end_pos)
     move_piece(start_pos, end_pos)
     @display.alert_player(other_player_color) if in_check?(other_player_color)
-    # display.alert_player(other_player_color) if @other_player_in_check #dupped_board.in_check?(other_player_color)
   end
 
   def move_creates_checked?(current_player, start_pos, end_pos)
@@ -96,8 +91,6 @@ class Board
     dupped_board.move_piece(start_pos, end_pos)
     positions_creates_check = dupped_board.in_check?(current_player.color)
     raise GameCheckError if positions_creates_check
-    # other_player_color = current_player.color == :black ? :white : :black
-    # @other_player_in_check = dupped_board.in_check?(other_player_color)
   end
 
 

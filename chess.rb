@@ -1,7 +1,7 @@
 require_relative 'board'
 require_relative 'player'
 require_relative 'computer_player'
-
+require 'byebug'
 class Game
 
   attr_reader :current_player
@@ -49,7 +49,13 @@ class Game
 end
 
 if __FILE__ == $PROGRAM_NAME
-  # game = Game.new(HumanPlayer.new("P1",:white), HumanPlayer.new("AI", :black) )
-  game = Game.new(HumanPlayer.new("P1",:white), ComputerPlayer.new("AI", :black) )
+  p 'Enter 1 to play against AI or 2 to play against another player.'
+  input = gets.chomp
+
+  if input == '1'
+    game = Game.new(HumanPlayer.new("P1",:white), ComputerPlayer.new("AI", :black) )
+  else
+    game = Game.new(HumanPlayer.new("P1",:white), HumanPlayer.new("AI", :black) )
+  end
   game.play_game
 end
